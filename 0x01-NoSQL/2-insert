@@ -1,2 +1,2 @@
-// sriugt isrt hw hrw hr
-db.school.inset({ name: "Holberton school" });
+// task 2
+db.school.insert({ name: 'Holberton school' });
