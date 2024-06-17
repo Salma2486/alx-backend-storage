@@ -1,0 +1,2 @@
+// sriugt isrt hw hrw hr
+db.school.inset({ name: "Holberton school" });
