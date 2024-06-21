@@ -2,7 +2,7 @@
 """task0"""
 import redis
 import uuid
-
+from typing import Union
 
 class Cache:
     """Cache class"""
@@ -11,7 +11,7 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
-    def store(self, data) -> str:
+    def store(self, data: Union[str, bytes, int, float]) -> str:
         """store method"""
         key = str(uuid.uuid4())
         self._redis.set(key, data)
