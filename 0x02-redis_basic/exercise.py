@@ -2,7 +2,7 @@
 """task0"""
 import redis
 import uuid
-from typing import Union
+from typing import Union, Callable, Optional
 
 class Cache:
     """Cache class"""
@@ -17,9 +17,17 @@ class Cache:
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: callable) -> Union[str, bytes, int, float]:
-        """get method"""
-        value = self._redis.get(key)
-        if value:
+    def get(self, key: str, fn: Optional[Callable] = None):
+        value = self.redis.get(key)
+        if value is None:
+            return None
+        if fn is not None:
             return fn(value)
-        return None
+        return value
+
+    def get_str(self, key: str):
+        return self.get(key, fn=lambda x: x.decode("utf-8"))
+
+    def get_int(self, key: str):
+        return self.get(key, fn=int)
+        
