@@ -17,20 +17,18 @@ class Cache:
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: Optional[Callable] = None):
-        """get method"""
-        value = self.redis.get(key)
-        if value is None:
-            return None
-        if fn is not None:
-            return fn(value)
-        return value
+    def get(self, key: str, fn: Callable = None,) -> Union[str, bytes, int, float]:
+        '''Retrieves a value from a Redis data storage.
+        '''
+        data = self._redis.get(key)
+        return fn(data) if fn is not None else data
 
-    def get_str(self, key: str):
-        """get_str method"""
-        return self.get(key, fn=lambda x: x.decode("utf-8"))
+    def get_str(self, key: str) -> str:
+        '''Retrieves a string value from a Redis data storage.
+        '''
+        return self.get(key, lambda x: x.decode('utf-8'))
 
-    def get_int(self, key: str):
-        """get_int method"""
-        return self.get(key, fn=int)
-        
+    def get_int(self, key: str) -> int:
+        '''Retrieves an integer value from a Redis data storage.
+        '''
+        return self.get(key, lambda x: int(x))
