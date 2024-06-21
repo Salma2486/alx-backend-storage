@@ -18,6 +18,7 @@ class Cache:
         return key
 
     def get(self, key: str, fn: Optional[Callable] = None):
+        """get method"""
         value = self.redis.get(key)
         if value is None:
             return None
@@ -26,8 +27,10 @@ class Cache:
         return value
 
     def get_str(self, key: str):
+        """get_str method"""
         return self.get(key, fn=lambda x: x.decode("utf-8"))
 
     def get_int(self, key: str):
+        """get_int method"""
         return self.get(key, fn=int)
         
